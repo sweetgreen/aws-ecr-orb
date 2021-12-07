@@ -36,12 +36,10 @@ workflows:
           requires: [orb-tools/lint]
 
       - orb-tools/publish-dev:
-          context: orb-publisher
-          orb-name: circleci/aws-ecr
+          orb-name: sweetgreen/aws-ecr
           requires: [orb-tools/pack]
 
       - orb-tools/trigger-integration-tests-workflow:
-          context: orb-publisher
           requires: [orb-tools/publish-dev]
 
   integration-test_deploy:
@@ -116,11 +114,10 @@ workflows:
           requires: [integration-tests-skip-when-tags-exist-populate-image]
 
       - orb-tools/dev-promote-prod-from-commit-subject:
-          orb-name: circleci/aws-ecr
-          context: orb-publisher
+          orb-name: sweetgreen/aws-ecr
           add-pr-comment: true
-          bot-token-variable: GHI_TOKEN
-          bot-user: orb-publisher
+          bot-token-variable: PR_COMMENTER_GITHUB_TOKEN
+          bot-user: sg-infra-machine
           fail-if-semver-not-indicated: true
           publish-version-tag: true
           ssh-fingerprints: 6f:16:49:d2:97:35:10:43:bc:a6:3f:f8:62:89:1f:42
