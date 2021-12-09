@@ -139,10 +139,10 @@ steps:
           docker context create builder
           docker --context builder buildx create --use
           docker --context builder buildx build \
-            <<#parameters.extra-build-args>><<parameters.extra-build-args>><</parameters.extra-build-args>> \
             -f <<parameters.path>>/<<parameters.dockerfile>> \
             $docker_tag_args \
             --platform <<parameters.platform>> --push \
-            <<parameters.path>>
+            <<parameters.path>> \
+            <<#parameters.extra-build-args>><<parameters.extra-build-args>><</parameters.extra-build-args>> \
         fi
       no_output_timeout: <<parameters.no-output-timeout>>
