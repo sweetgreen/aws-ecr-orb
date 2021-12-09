@@ -117,6 +117,7 @@ steps:
         registry_id=$(echo $<<parameters.account-url>> | sed "s;\..*;;g")
         number_of_tags_in_ecr=0
 
+        echo Before args
         docker_tag_args=""
         IFS="," read -ra DOCKER_TAGS \<<< "<< parameters.tag >>"
         for tag in "${DOCKER_TAGS[@]}"; do
@@ -130,12 +131,14 @@ steps:
           docker_tag_args="$docker_tag_args -t $<<parameters.account-url>>/<<parameters.repo>>:$tag"
         done
         if [ "<<parameters.skip-when-tags-exist>>" = "false" ] || [ "<<parameters.skip-when-tags-exist>>" = "true" -a $number_of_tags_in_ecr -lt ${#DOCKER_TAGS[@]} ]; then
+          echo Preparing docker
           docker context create builder
           docker --context builder buildx create --use
-          docker --context builder buildx build --platform <<parameters.platform>> --push \
+          docker --context builder buildx build \
             <<#parameters.extra-build-args>><<parameters.extra-build-args>><</parameters.extra-build-args>> \
             -f <<parameters.path>>/<<parameters.dockerfile>> \
             $docker_tag_args \
-            <<parameters.path>>
+            <<parameters.path>> \
+            --platform <<parameters.platform>> --push
         fi
       no_output_timeout: <<parameters.no-output-timeout>>
