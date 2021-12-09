@@ -213,4 +213,3 @@ steps:
       region: <<parameters.region>>
       aws-access-key-id: <<parameters.aws-access-key-id>>
       aws-secret-access-key: <<parameters.aws-secret-access-key>>
-
