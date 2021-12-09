@@ -114,10 +114,6 @@ steps:
   - run:
       name: Build docker image
       command: |
-        # shellcheck disable=SC2154
-        trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
-        # shellcheck disable=SC2154
-        trap 'echo " !! \"${last_command}\" command failed with exit code $?. !!"' ERR
         registry_id=$(echo $<<parameters.account-url>> | sed "s;\..*;;g")
         number_of_tags_in_ecr=0
 
@@ -133,9 +129,7 @@ steps:
           fi
           docker_tag_args="$docker_tag_args -t $<<parameters.account-url>>/<<parameters.repo>>:$tag"
         done
-        echo ${docker_tag_args}
         if [ "<<parameters.skip-when-tags-exist>>" = "false" ] || [ "<<parameters.skip-when-tags-exist>>" = "true" -a $number_of_tags_in_ecr -lt ${#DOCKER_TAGS[@]} ]; then
-          echo Preparing docker
           docker context create builder
           docker --context builder buildx create --use
           docker --context builder buildx build \
