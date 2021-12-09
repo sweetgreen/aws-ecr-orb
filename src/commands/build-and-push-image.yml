@@ -181,6 +181,9 @@ steps:
       aws-access-key-id: <<parameters.aws-access-key-id>>
       aws-secret-access-key: <<parameters.aws-secret-access-key>>
 
+  - buildx-install:
+      version: v0.7.1
+
   - when:
       condition: <<parameters.create-repo>>
       steps:
