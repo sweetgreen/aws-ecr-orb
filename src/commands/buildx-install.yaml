@@ -23,7 +23,7 @@ steps:
             export SYS_ENV_PLATFORM=linux-amd64
           elif uname -m | grep "aarch64"; then
             export SYS_ENV_PLATFORM=linux-arm64
-          if
+          fi
         else
             echo "This platform appears to be unsupported."
             uname -a
