@@ -117,9 +117,10 @@ steps:
         registry_id=$(echo $<<parameters.account-url>> | sed "s;\..*;;g")
         number_of_tags_in_ecr=0
 
-        echo Before args
         docker_tag_args=""
+        echo before IFS
         IFS="," read -ra DOCKER_TAGS \<<< "<< parameters.tag >>"
+        echo after IFS
         for tag in "${DOCKER_TAGS[@]}"; do
           if [ "<<parameters.skip-when-tags-exist>>" = "true" ]; then
             docker_tag_exists_in_ecr=$(aws ecr describe-images --profile <<parameters.profile-name>> --registry-id $registry_id --repository-name <<parameters.repo>> --query "contains(imageDetails[].imageTags[], '$tag')")
