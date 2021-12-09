@@ -117,7 +117,7 @@ steps:
         # shellcheck disable=SC2154
         trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
         # shellcheck disable=SC2154
-        trap ' !! \"${last_command}\" command failed with exit code \"$?\". !!' ERR
+        trap 'echo " !! \"${last_command}\" command failed with exit code $?. !!"' ERR
         registry_id=$(echo $<<parameters.account-url>> | sed "s;\..*;;g")
         number_of_tags_in_ecr=0
 
