@@ -18,10 +18,12 @@ steps:
           elif uname -m | grep "arm64"; then
             export SYS_ENV_PLATFORM=darwin-arm64
           fi
-        elif uname -a | grep "x86_64 GNU/Linux"; then
+        elif uname -a | grep "Linux"; then
+          if uname -m | grep "x86_64"; then
             export SYS_ENV_PLATFORM=linux-amd64
-        elif uname -a | grep "aarch64 GNU/Linux"; then
+          elif uname -m | grep "aarch64"; then
             export SYS_ENV_PLATFORM=linux-arm64
+          if
         else
             echo "This platform appears to be unsupported."
             uname -a
