@@ -31,6 +31,7 @@ steps:
         fi
         echo "Platform $SYS_ENV_PLATFORM"
         curl -sSL "https://github.com/docker/buildx/releases/download/${PARAM_BUILDX_VERSION}/buildx-${PARAM_BUILDX_VERSION}.${SYS_ENV_PLATFORM}" -o "buildx"
+        mkdir ~/.docker/cli-plugins/
         cp buildx ~/.docker/cli-plugins/docker-buildx
         chmod a+x ~/.docker/cli-plugins/docker-buildx
       environment:
