@@ -1,12 +1,12 @@
 description: Install buildx.
 parameters:
-    version:
-        default: v0.7.1
-        description: Select a specific version of the AWS v2 CLI. By default the latest version will be used.
-        type: string
+  version:
+    default: v0.7.1
+    description: Select a specific version of the AWS v2 CLI. By default the latest version will be used.
+    type: string
 steps:
   - run:
-    command: |
+      command: |
         if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
 
         echo "Installing buildx"
@@ -31,6 +31,6 @@ steps:
         curl -sSL "https://github.com/docker/buildx/releases/download/${PARAM_BUILDX_VERSION}/buildx-${PARAM_BUILDX_VERSION}.${SYS_ENV_PLATFORM}" -o "buildx"
         cp buildx ~/.docker/cli-plugins/docker-buildx
         chmod a+x ~/.docker/cli-plugins/docker-buildx
-    environment:
+      environment:
         PARAM_BUILDX_VERSION: <<parameters.version>>
-    name: Install buildx - <<parameters.version>>
+      name: Install buildx - <<parameters.version>>
