@@ -138,6 +138,7 @@ steps:
             -f <<parameters.path>>/<<parameters.dockerfile>> \
             $docker_tag_args \
             --platform <<parameters.platform>> --push \
+            --progress plain \
             <<parameters.path>> \
             <<#parameters.extra-build-args>><<parameters.extra-build-args>><</parameters.extra-build-args>> \
         fi
