@@ -134,7 +134,8 @@ steps:
           fi
           docker_tag_args="$docker_tag_args -t $<<parameters.account-url>>/<<parameters.repo>>:$tag"
         done
-        cache_repo="<<parameters.cache_registry_url>>/<<parameters.repo>>:${CIRCLE_PREVIOUS_BUILD_NUM}"
+        # cache_repo="<<parameters.cache_registry_url>>/<<parameters.repo>>:${CIRCLE_PREVIOUS_BUILD_NUM}"
+        cache_repo="<<parameters.cache_registry_url>>:$<<parameters.repo>>-${CIRCLE_PREVIOUS_BUILD_NUM}"
         if [ "<<parameters.skip-when-tags-exist>>" = "false" ] || [ "<<parameters.skip-when-tags-exist>>" = "true" -a $number_of_tags_in_ecr -lt ${#DOCKER_TAGS[@]} ]; then
           docker context create builder
           # install binfmt_misc to allow creating native binaries inside the container
