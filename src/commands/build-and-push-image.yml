@@ -155,11 +155,6 @@ parameters:
     default: "linux/amd64"
     description: Platform targets for the docker image, multi arch images. Ex. linux/amd64,linux/arm64
 
-  cache_registry_url:
-    type: string
-    default: <<parameters.account-url>>
-    description: Define the caching registry to use
-
 steps:
   - when:
       condition: <<parameters.checkout>>
@@ -206,7 +201,6 @@ steps:
 
   - build-image:
       account-url: <<parameters.account-url>>
-      cache_registry_url: <<parameters.cache_registry_url>>
       repo: <<parameters.repo>>
       tag: <<parameters.tag>>
       dockerfile: <<parameters.dockerfile>>
