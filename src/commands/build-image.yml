@@ -129,12 +129,15 @@ steps:
           fi
           docker_tag_args="$docker_tag_args -t $<<parameters.account-url>>/<<parameters.repo>>:$tag"
         done
+        cache_repo="$<<parameters.account-url>>/<<parameters.repo>>:${CIRCLE_BUILD_NUM}"
         if [ "<<parameters.skip-when-tags-exist>>" = "false" ] || [ "<<parameters.skip-when-tags-exist>>" = "true" -a $number_of_tags_in_ecr -lt ${#DOCKER_TAGS[@]} ]; then
           docker context create builder
           # install binfmt_misc to allow creating native binaries inside the container
           docker --context builder run --privileged --rm tonistiigi/binfmt --install all
           docker --context builder buildx create --use
           docker --context builder buildx build \
+            --cache-from=type=registry,ref=${cache_repo} \
+            --cache-to=type=registry,ref=${cache_repo},mode=max
             -f <<parameters.path>>/<<parameters.dockerfile>> \
             $docker_tag_args \
             --platform <<parameters.platform>> --push \
