@@ -137,7 +137,7 @@ steps:
           docker --context builder buildx create --use
           docker --context builder buildx build \
             --cache-from=type=registry,ref=${cache_repo} \
-            --cache-to=type=registry,ref=${cache_repo},mode=max
+            --cache-to=type=registry,ref=${cache_repo},mode=max \
             -f <<parameters.path>>/<<parameters.dockerfile>> \
             $docker_tag_args \
             --platform <<parameters.platform>> --push \
